@@ -32,7 +32,9 @@ class Api
     /**
      * @param $method
      * @param array $params
+     *
      * @return mixed|stdClass
+     *
      * @throws NotOkException
      */
     public function request($method, $params = [])
@@ -65,6 +67,7 @@ class Api
 
     /**
      * @return User
+     *
      * @throws NotOkException
      */
     public function getMe()
@@ -74,7 +77,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendMessage($params)
@@ -87,7 +92,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function forwardMessage($params)
@@ -97,7 +104,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendPhoto($params)
@@ -110,7 +119,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendAudio($params)
@@ -123,7 +134,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendDocument($params)
@@ -136,7 +149,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendSticker($params)
@@ -149,7 +164,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendVideo($params)
@@ -162,7 +179,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Message
+     *
      * @throws NotOkException
      */
     public function sendLocation($params)
@@ -175,7 +194,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return mixed
+     *
      * @throws NotOkException
      */
     public function sendChatAction($params)
@@ -185,7 +206,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return UserProfilePhotos
+     *
      * @throws NotOkException
      */
     public function getUserProfilePhotos($params)
@@ -195,7 +218,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return Update[]
+     *
      * @throws NotOkException
      */
     public function getUpdates($params)
@@ -207,7 +232,9 @@ class Api
 
     /**
      * @param $params
+     *
      * @return mixed
+     *
      * @throws NotOkException
      */
     public function setWebhook($params)

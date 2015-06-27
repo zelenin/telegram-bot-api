@@ -25,6 +25,7 @@ class Client implements ClientInterface
     /**
      * @param string $method
      * @param array $params
+     *
      * @return Response
      */
     public function request($method, $params = [])
@@ -49,6 +50,7 @@ class Client implements ClientInterface
 
     /**
      * @param string $method
+     *
      * @return string
      */
     private function getUrl($method)
