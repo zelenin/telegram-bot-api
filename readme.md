@@ -11,13 +11,13 @@ The preferred way to install this extension is through [Composer](http://getcomp
 Either run
 
 ```
-php composer.phar require "zelenin/telegram-bot-api" "0.0.1"
+php composer.phar require "zelenin/telegram-bot-api" "~0.0"
 ```
 
 or add
 
 ```
-"zelenin/telegram-bot-api": "0.0.1"
+"zelenin/telegram-bot-api": "~0.0"
 ```
 
 to the require section of your ```composer.json```
