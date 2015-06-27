@@ -11,9 +11,14 @@ use Zelenin\Telegram\Bot\Type\UserProfilePhotos;
 
 class Api
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $token;
-    /** @var ClientInterface */
+
+    /**
+     * @var ClientInterface
+     */
     private $client;
 
     /**
