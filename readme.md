@@ -33,6 +33,12 @@ try {
         'text' => 'Test message
     ]);
     print_r($response);
+    
+    $response = $client->sendPhoto([
+    	'chat_id' => $myId,
+    	'photo' => fopen('/home/www/photo.jpg', 'r')
+    ]);
+    print_r($response);
 } catch(Exception $e) {
     echo $e->getMessage();
 }

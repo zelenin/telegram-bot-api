@@ -30,9 +30,18 @@ class Client implements ClientInterface
     public function request($method, $params = [])
     {
         $client = new \GuzzleHttp\Client();
+
+        $multipartParams = [];
+        foreach ($params as $key => $value) {
+            $multipartParams[] = [
+                'name' => $key,
+                'contents' => is_scalar($value) ? (string)$value : $value
+            ];
+        }
+
         $response = $client->post($this->getUrl($method), [
             'verify' => false,
-            'query' => $params
+            'multipart' => $multipartParams ?: null
         ]);
         $response = json_decode($response->getBody());
         return new Response($response->ok, $response->result);
