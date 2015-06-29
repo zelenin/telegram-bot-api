@@ -41,7 +41,7 @@ class Api
     {
         $response = $this->getClient()->request($method, $params);
         if (!$response->getOk()) {
-            throw new NotOkException('Ok is false');
+            throw new NotOkException('Code: ' . $response->getErrorCode() . '. Description: "' . $response->getDescription() . '".');
         }
         return $response->getResult();
     }

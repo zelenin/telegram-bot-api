@@ -2,6 +2,8 @@
 
 namespace Zelenin\Telegram\Bot;
 
+use GuzzleHttp\Exception\ClientException;
+
 class Client implements ClientInterface
 {
     /**
@@ -40,12 +42,17 @@ class Client implements ClientInterface
             ];
         }
 
-        $response = $client->post($this->getUrl($method), [
-            'verify' => false,
-            'multipart' => $multipartParams ?: null
-        ]);
-        $response = json_decode($response->getBody());
-        return new Response($response->ok, $response->result);
+        try {
+            $response = $client->post($this->getUrl($method), [
+                'verify' => false,
+                'multipart' => $multipartParams ?: null
+            ]);
+            $response = json_decode($response->getBody());
+            return new Response($response->ok, $response->result);
+        } catch (ClientException $e) {
+            $response = json_decode($e->getResponse()->getBody()->getContents());
+            return new Response($response->ok, null, $response->error_code, $response->description);
+        }
     }
 
     /**
