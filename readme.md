@@ -39,7 +39,7 @@ try {
     	'photo' => fopen('/home/www/photo.jpg', 'r')
     ]);
     print_r($response);
-} catch(Exception $e) {
+} catch (\Zelenin\Telegram\Bot\NotOkException $e) {
     echo $e->getMessage();
 }
 ```
