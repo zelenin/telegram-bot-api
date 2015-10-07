@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class Audio extends Type
+class Voice extends Type
 {
     /**
      * Unique identifier for this file
@@ -17,20 +17,6 @@ class Audio extends Type
      * @var integer
      */
     public $duration;
-
-    /**
-     * Optional. Performer of the audio as defined by sender or by audio tags
-     *
-     * @var string
-     */
-    public $performer;
-
-    /**
-     * Optional. Title of the audio as defined by sender or by audio tags
-     *
-     * @var string
-     */
-    public $title;
 
     /**
      * Optional. MIME type of the file as defined by sender

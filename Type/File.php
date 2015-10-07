@@ -24,5 +24,4 @@ class File extends Type
      * @var string
      */
     public $file_path;
-
 }

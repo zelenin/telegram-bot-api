@@ -14,7 +14,7 @@ class Document extends Type
     public $file_id;
 
     /**
-     * Document thumbnail as defined by sender
+     * Optional. Document thumbnail as defined by sender
      *
      * @var PhotoSize
      */
