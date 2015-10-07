@@ -3,6 +3,7 @@
 namespace Zelenin\Telegram\Bot;
 
 use stdClass;
+use Zelenin\Telegram\Bot\Exception\NotOkException;
 use Zelenin\Telegram\Bot\Type\File;
 use Zelenin\Telegram\Bot\Type\Message;
 use Zelenin\Telegram\Bot\Type\ReplyMarkup;

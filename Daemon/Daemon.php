@@ -4,7 +4,7 @@ namespace Zelenin\Telegram\Bot\Daemon;
 
 use Generator;
 use Zelenin\Telegram\Bot\Api;
-use Zelenin\Telegram\Bot\Daemon\Exception\NotCallableException;
+use Zelenin\Telegram\Bot\Exception\NotCallableException;
 use Zelenin\Telegram\Bot\Type\Update;
 
 class Daemon implements DaemonInterface

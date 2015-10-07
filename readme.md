@@ -61,6 +61,7 @@ $daemon
     });
 
 $daemon->run();
+```
 
 See [Bot API documentation](https://core.telegram.org/bots/api) for other methods.
 
