@@ -7,6 +7,7 @@ use Zelenin\Telegram\Bot\Type\Message;
 use Zelenin\Telegram\Bot\Type\ReplyMarkup;
 use Zelenin\Telegram\Bot\Type\Update;
 use Zelenin\Telegram\Bot\Type\User;
+use Zelenin\Telegram\Bot\Type\File;
 use Zelenin\Telegram\Bot\Type\UserProfilePhotos;
 
 class Api
@@ -241,4 +242,17 @@ class Api
     {
         return $this->request('setWebhook', $params);
     }
+
+
+  /**
+   * @param $params
+   *
+   * @return File
+   *
+   * @throws NotOkException
+   */
+  public function getFile($params)
+  {
+    return new File($this->request('getFile', $params));
+  }
 }
