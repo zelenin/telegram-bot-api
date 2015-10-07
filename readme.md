@@ -44,6 +44,24 @@ try {
 }
 ```
 
+### Daemon
+
+```php
+$config = [
+    'token' => 'your-api-token'
+];
+
+$client = new Api($config['token']);
+
+$daemon = new \Zelenin\Telegram\Bot\Daemon\Daemon($client);
+
+$daemon
+    ->onUpdate(function (\Zelenin\Telegram\Bot\Type\Update $update) {
+        print_r($update);
+    });
+
+$daemon->run();
+
 See [Bot API documentation](https://core.telegram.org/bots/api) for other methods.
 
 ## Author
