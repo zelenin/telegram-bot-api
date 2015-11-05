@@ -114,7 +114,7 @@ class Daemon implements DaemonInterface
      */
     private function getTimeout()
     {
-        return $this->offset;
+        return $this->timeout;
     }
 
     /**
