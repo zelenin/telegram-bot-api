@@ -27,7 +27,10 @@ class UserProfilePhotos extends Type
     {
         parent::loadResult($result);
 
-        if (isset($result->photos)) {
+        if ($result->total_count > 0
+            && isset($result->photos[0])
+            && is_array($result->photos[0])
+        ) {
             $this->photos = [];
             foreach ($result->photos[0] as $photo) {
                 $this->photos[] = new PhotoSize($photo);
