@@ -3,6 +3,7 @@
 namespace Zelenin\Telegram\Bot;
 
 use GuzzleHttp\Exception\ClientException;
+use Zelenin\Telegram\Bot\Exception\NotOkException;
 
 class Client implements ClientInterface
 {
@@ -48,6 +49,11 @@ class Client implements ClientInterface
                 'multipart' => $multipartParams ?: null
             ]);
             $response = json_decode($response->getBody());
+
+            if ($response === null) {
+                throw new NotOkException('Invalid access token provided');
+            }
+
             return new Response($response->ok, $response->result);
         } catch (ClientException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents());
