@@ -3,6 +3,7 @@
 namespace Zelenin\Telegram\Bot;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
 
 class Client implements ClientInterface
@@ -58,6 +59,8 @@ class Client implements ClientInterface
         } catch (ClientException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents());
             return new Response($response->ok, null, $response->error_code, $response->description);
+        } catch (ServerException $e) {
+            return new Response(false, null, $e->getResponse()->getStatusCode(), $e->getResponse()->getReasonPhrase());
         }
     }
 
