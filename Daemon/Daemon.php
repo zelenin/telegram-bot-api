@@ -51,6 +51,11 @@ class Daemon implements DaemonInterface
         }
 
         \Amp\run(function () {
+            
+            \Amp\onSignal(SIGINT, function () {
+                \Amp\stop();
+            });            
+            
             \Amp\repeat(function () {
                 foreach ($this->getUpdates() as $update) {
                     $this->runCallback($update);
