@@ -37,8 +37,8 @@ class Daemon implements DaemonInterface
     public function __construct(Api $client, $offset = 0, $timeout = 1000)
     {
         $this->client = $client;
-        $this->offset = $offset;
-        $this->timeout = $timeout;
+        $this->offset = (int)$offset;
+        $this->timeout = (int)$timeout;
     }
 
     /**
@@ -51,11 +51,10 @@ class Daemon implements DaemonInterface
         }
 
         \Amp\run(function () {
-            
             \Amp\onSignal(SIGINT, function () {
                 \Amp\stop();
-            });            
-            
+            });
+
             \Amp\repeat(function () {
                 foreach ($this->getUpdates() as $update) {
                     $this->runCallback($update);
