@@ -30,7 +30,7 @@ $client = new Zelenin\Telegram\Bot\Api($token);
 try {
     $response = $client->sendMessage([
         'chat_id' => $chatId,
-        'text' => 'Test message
+        'text' => 'Test message'
     ]);
     print_r($response);
     
