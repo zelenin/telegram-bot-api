@@ -3,6 +3,7 @@
 namespace Zelenin\Telegram\Bot;
 
 use stdClass;
+use Zelenin\Telegram\Bot\Client\Client;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
 use Zelenin\Telegram\Bot\Type\File;
 use Zelenin\Telegram\Bot\Type\Message;
@@ -11,24 +12,19 @@ use Zelenin\Telegram\Bot\Type\Update;
 use Zelenin\Telegram\Bot\Type\User;
 use Zelenin\Telegram\Bot\Type\UserProfilePhotos;
 
-class Api
+final class Api
 {
     /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var ClientInterface
+     * @var Client
      */
     private $client;
 
     /**
-     * @param $token
+     * @param Client $client
      */
-    public function __construct($token)
+    public function __construct(Client $client)
     {
-        $this->token = $token;
+        $this->client = $client;
     }
 
     /**
@@ -41,30 +37,11 @@ class Api
      */
     public function request($method, $params = [])
     {
-        $response = $this->getClient()->request($method, $params);
+        $response = $this->client->request($method, $params);
         if (!$response->getOk()) {
             throw new NotOkException('Code: ' . $response->getErrorCode() . '. Description: "' . $response->getDescription() . '".');
         }
         return $response->getResult();
-    }
-
-    /**
-     * @return Client|ClientInterface
-     */
-    private function getClient()
-    {
-        if (!$this->client instanceof ClientInterface) {
-            $this->client = new Client($this->token);
-        }
-        return $this->client;
-    }
-
-    /**
-     * @param ClientInterface $client
-     */
-    public function setClient(ClientInterface $client)
-    {
-        $this->client = $client;
     }
 
     /**

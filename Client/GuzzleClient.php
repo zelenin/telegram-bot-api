@@ -1,12 +1,12 @@
 <?php
 
-namespace Zelenin\Telegram\Bot;
+namespace Zelenin\Telegram\Bot\Client;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
 
-class Client implements ClientInterface
+final class GuzzleClient implements Client
 {
     /**
      * @var string
@@ -23,6 +23,9 @@ class Client implements ClientInterface
      */
     public function __construct($token)
     {
+        if (!is_string($token)) {
+            throw new \InvalidArgumentException('Token must be a string.');
+        }
         $this->token = $token;
     }
 
@@ -52,9 +55,8 @@ class Client implements ClientInterface
             $response = json_decode($response->getBody());
 
             if ($response === null) {
-                throw new NotOkException('Invalid access token provided');
+                throw new NotOkException('Empty response.');
             }
-
             return new Response($response->ok, $response->result);
         } catch (ClientException $e) {
             $response = json_decode($e->getResponse()->getBody()->getContents());

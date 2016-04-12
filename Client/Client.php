@@ -1,8 +1,8 @@
 <?php
 
-namespace Zelenin\Telegram\Bot;
+namespace Zelenin\Telegram\Bot\Client;
 
-interface ClientInterface
+interface Client
 {
     /**
      * @param string $method

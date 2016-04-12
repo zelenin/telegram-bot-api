@@ -1,15 +1,16 @@
 <?php
 
-namespace Zelenin\Telegram\Bot;
+namespace Zelenin\Telegram\Bot\Client;
 
 use stdClass;
 
-class Response
+final class Response
 {
     /**
      * @var boolean
      */
     private $ok;
+
     /**
      * @var stdClass
      */
