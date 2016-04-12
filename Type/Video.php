@@ -2,9 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-use stdClass;
-
-class Video extends Type
+final class Video extends Type
 {
     /**
      * Unique identifier for this file
@@ -56,14 +54,14 @@ class Video extends Type
     public $file_size;
 
     /**
-     * @param stdClass $result
+     * @param array $attributes
      */
-    public function loadResult(stdClass $result)
+    public function loadRelated(array $attributes)
     {
-        parent::loadResult($result);
+        parent::loadRelated($attributes);
 
-        if (isset($result->thumb)) {
-            $this->thumb = new PhotoSize($result->thumb);
+        if (isset($result['thumb'])) {
+            $this->thumb = PhotoSize::create($result['thumb']);
         }
     }
 }

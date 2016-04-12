@@ -2,9 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-use stdClass;
-
-class Message extends Type
+final class Message extends Type
 {
     /**
      * Unique message identifier
@@ -61,6 +59,13 @@ class Message extends Type
      * @var string
      */
     public $text;
+
+    /**
+     * Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+     *
+     * @var MessageEntity[]
+     */
+    public $entities;
 
     /**
      * Optional. Message is an audio file, information about the file
@@ -126,18 +131,25 @@ class Message extends Type
     public $location;
 
     /**
-     * Optional. A new member was added to the group, information about them (this member may be bot itself)
+     * Optional. Message is a venue, information about the venue
      *
-     * @var User
+     * @var Venue
      */
-    public $new_chat_participant;
+    public $venue;
 
     /**
-     * Optional. A member was removed from the group, information about them (this member may be bot itself)
+     * Optional. A new member was added to the group, information about them (this member may be the bot itself)
      *
      * @var User
      */
-    public $left_chat_participant;
+    public $new_chat_member;
+
+    /**
+     * Optional. A member was removed from the group, information about them (this member may be the bot itself)
+     *
+     * @var User
+     */
+    public $left_chat_member;
 
     /**
      * Optional. A group title was changed to this value
@@ -168,80 +180,119 @@ class Message extends Type
     public $group_chat_created;
 
     /**
-     * @param stdClass $result
+     * Optional. Service message: the supergroup has been created
+     *
+     * @var boolean
      */
-    public function loadResult(stdClass $result)
+    public $super_group_chat_created;
+
+    /**
+     * Optional. Service message: the channel has been created
+     *
+     * @var boolean
+     */
+    public $channel_chat_created;
+
+    /**
+     * Optional. The group has been migrated to a supergroup with the specified identifier, not exceeding 1e13 by absolute value
+     *
+     * @var int
+     */
+    public $migrate_to_chat_id;
+
+    /**
+     * Optional. The supergroup has been migrated from a group with the specified identifier, not exceeding 1e13 by absolute value
+     *
+     * @var int
+     */
+    public $migrate_from_chat_id;
+
+    /**
+     * Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+     *
+     * @var Message
+     */
+    public $pinned_message;
+
+    /**
+     * @param array $attributes
+     */
+    public function loadRelated(array $attributes)
     {
-        parent::loadResult($result);
+        parent::loadRelated($attributes);
 
-        if (isset($result->from)) {
-            $this->from = new User($result->from);
+        if (isset($attributes['from'])) {
+            $this->from = User::create($attributes['from']);
         }
 
-        if (isset($result->chat)) {
-            $this->chat = isset($result->chat->title) ? new GroupChat($result->chat) : new User($result->chat);
+        if (isset($attributes['chat'])) {
+            $this->chat = isset($attributes['chat']->title) ? GroupChat::create($attributes['chat']) : User::create($attributes['chat']);
         }
 
-        if (isset($result->forward_from)) {
-            $this->forward_from = new User($result->forward_from);
+        if (isset($attributes['forward_from'])) {
+            $this->forward_from = User::create($attributes['forward_from']);
         }
 
-        if (isset($result->reply_to_message)) {
-            $this->reply_to_message = new static($result->reply_to_message);
+        if (isset($attributes['reply_to_message'])) {
+            $this->reply_to_message = Message::create($attributes['reply_to_message']);
         }
 
-        if (isset($result->audio)) {
-            $this->audio = new Audio($result->audio);
+        if (isset($attributes['entities'])) {
+            $this->entities = array_map(function ($entity) {
+                return MessageEntity::create($entity);
+            }, $attributes['entities']);
         }
 
-        if (isset($result->document)) {
-            $this->document = new Document($result->document);
+        if (isset($attributes['audio'])) {
+            $this->audio = Audio::create($attributes['audio']);
         }
 
-        if (isset($result->photo)) {
-            $this->photo = [];
-            foreach ($result->photo as $photo) {
-                $this->photo[] = new PhotoSize($photo);
-            }
+        if (isset($attributes['document'])) {
+            $this->document = Document::create($attributes['document']);
         }
 
-        if (isset($result->sticker)) {
-            $this->sticker = new Sticker($result->sticker);
+        if (isset($attributes['photo'])) {
+            $this->photo = array_map(function ($photo) {
+                return PhotoSize::create($photo);
+            }, $attributes['photo']);
         }
 
-        if (isset($result->video)) {
-            $this->video = new Video($result->video);
+        if (isset($attributes['sticker'])) {
+            $this->sticker = Sticker::create($attributes['sticker']);
         }
 
-        if (isset($result->voice)) {
-            $this->voice = new Voice($result->voice);
+        if (isset($attributes['video'])) {
+            $this->video = Video::create($attributes['video']);
         }
 
-        if (isset($result->contact)) {
-            $this->contact = new Contact($result->contact);
+        if (isset($attributes['voice'])) {
+            $this->voice = Voice::create($attributes['voice']);
         }
 
-        if (isset($result->location)) {
-            $this->location = new Location($result->location);
+        if (isset($attributes['contact'])) {
+            $this->contact = Contact::create($attributes['contact']);
         }
 
-        if (isset($result->new_chat_participant)) {
-            $this->new_chat_participant = new User($result->new_chat_participant);
+        if (isset($attributes['location'])) {
+            $this->location = Location::create($attributes['location']);
         }
 
-        if (isset($result->left_chat_participant)) {
-            $this->left_chat_participant = new User($result->left_chat_participant);
+        if (isset($attributes['venue'])) {
+            $this->venue = Venue::create($attributes['venue']);
         }
 
-        if (isset($result->location)) {
-            $this->location = new Location($result->location);
+        if (isset($attributes['new_chat_member'])) {
+            $this->new_chat_member = User::create($attributes['new_chat_member']);
         }
 
-        if (isset($result->new_chat_photo)) {
-            $this->new_chat_photo = [];
-            foreach ($result->new_chat_photo as $photo) {
-                $this->new_chat_photo[] = new PhotoSize($photo);
-            }
+        if (isset($attributes['left_chat_member'])) {
+            $this->left_chat_member = new User($attributes['left_chat_member']);
+        }
+
+        if (isset($attributes['new_chat_photo'])) {
+            $this->new_chat_photo = array_map(function ($photo) {
+                return PhotoSize::create($photo);
+            }, $attributes['new_chat_photo']);
         }
     }
 }

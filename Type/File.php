@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class File extends Type
+final class File extends Type
 {
     /**
      * Unique identifier for this file

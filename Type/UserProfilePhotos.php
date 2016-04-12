@@ -2,9 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-use stdClass;
-
-class UserProfilePhotos extends Type
+final class UserProfilePhotos extends Type
 {
     /**
      * Total number of profile pictures the target user has
@@ -21,18 +19,18 @@ class UserProfilePhotos extends Type
     public $photos;
 
     /**
-     * @param stdClass $result
+     * @param array $attributes
      */
-    public function loadResult(stdClass $result)
+    public function loadRelated(array $attributes)
     {
-        parent::loadResult($result);
+        parent::loadRelated($attributes);
 
         $this->photos = [];
 
-        if ($result->total_count > 0) {
+        if ($attributes['total_count'] > 0) {
             $this->photos = array_map(function ($photo) {
                 return new PhotoSize($photo);
-            }, $result->photos[0]);
+            }, $attributes['photos'][0]);
         }
     }
 }

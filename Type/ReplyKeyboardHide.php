@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class ReplyKeyboardHide extends ReplyMarkup
+final class ReplyKeyboardHide extends ReplyMarkup
 {
     /**
      * Requests clients to hide the custom keyboard

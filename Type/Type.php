@@ -3,26 +3,53 @@
 namespace Zelenin\Telegram\Bot\Type;
 
 use stdClass;
+use Zelenin\Telegram\Bot\Client\Response;
 
 abstract class Type
 {
     /**
-     * @param stdClass $result
+     * @param array $attributes
      */
-    public function __construct(stdClass $result = null)
+    public function __construct(array $attributes)
     {
-        if ($result instanceof stdClass) {
-            $this->loadResult($result);
+        $this->load($attributes);
+        $this->loadRelated($attributes);
+    }
+
+    /**
+     * @param array $attributes
+     */
+    private function load(array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            $this->$key = $value;
         }
     }
 
     /**
-     * @param stdClass $result
+     * @param array $attributes
      */
-    public function loadResult(stdClass $result)
+    protected function loadRelated(array $attributes)
     {
-        foreach ($result as $key => $value) {
-            $this->$key = $value;
-        }
+    }
+
+    /**
+     * @param Response $response
+     *
+     * @return static
+     */
+    public static function createFromResponse(Response $response)
+    {
+        return static::create($response->getResult());
+    }
+
+    /**
+     * @param stdClass $object
+     *
+     * @return static
+     */
+    public static function create(stdClass $object)
+    {
+        return new static((array)$object);
     }
 }

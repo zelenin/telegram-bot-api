@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class Contact extends Type
+final class Contact extends Type
 {
     /**
      * Contact's phone number

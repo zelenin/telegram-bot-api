@@ -2,9 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-use stdClass;
-
-class Document extends Type
+final class Document extends Type
 {
     /**
      * Unique file identifier
@@ -42,14 +40,14 @@ class Document extends Type
     public $file_size;
 
     /**
-     * @param stdClass $result
+     * @param array $attributes
      */
-    public function loadResult(stdClass $result)
+    public function loadRelated(array $attributes)
     {
-        parent::loadResult($result);
+        parent::loadRelated($attributes);
 
-        if (isset($result->thumb)) {
-            $this->thumb = new PhotoSize($result->thumb);
+        if (isset($attributes['thumb'])) {
+            $this->thumb = PhotoSize::create($attributes['thumb']);
         }
     }
 }

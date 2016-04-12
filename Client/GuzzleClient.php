@@ -36,7 +36,7 @@ final class GuzzleClient implements Client
      *
      * @return Response
      */
-    public function request($method, $params = [])
+    public function request($method, array $params = [])
     {
         $client = new \GuzzleHttp\Client();
 

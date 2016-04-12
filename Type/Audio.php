@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class Audio extends Type
+final class Audio extends Type
 {
     /**
      * Unique identifier for this file

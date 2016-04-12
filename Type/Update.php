@@ -2,9 +2,10 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-use stdClass;
+use Zelenin\Telegram\Bot\Type\Inline\ChosenInlineResult;
+use Zelenin\Telegram\Bot\Type\Inline\InlineQuery;
 
-class Update extends Type
+final class Update extends Type
 {
     /**
      * The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
@@ -20,12 +21,48 @@ class Update extends Type
      */
     public $message;
 
-    public function loadResult(stdClass $result)
-    {
-        parent::loadResult($result);
+    /**
+     * Optional. New incoming inline query
+     *
+     * @var InlineQuery
+     */
+    public $inline_query;
 
-        if (isset($result->message)) {
-            $this->message = new Message($result->message);
+    /**
+     * Optional. The result of an inline query that was chosen by a user and sent to their chat partner.
+     *
+     * @var ChosenInlineResult
+     */
+    public $chosen_inline_result;
+
+    /**
+     * Optional. New incoming callback query
+     *
+     * @var CallbackQuery
+     */
+    public $callback_query;
+
+    /**
+     * @param array $attributes
+     */
+    public function loadRelated(array $attributes)
+    {
+        parent::loadRelated($attributes);
+
+        if (isset($attributes['message'])) {
+            $this->message = Message::create($attributes['message']);
+        }
+
+        if (isset($attributes['inline_query'])) {
+            $this->inline_query = InlineQuery::create($attributes['inline_query']);
+        }
+
+        if (isset($attributes['chosen_inline_result'])) {
+            $this->chosen_inline_result = ChosenInlineResult::create($attributes['chosen_inline_result']);
+        }
+
+        if (isset($attributes['callback_query'])) {
+            $this->callback_query = CallbackQuery::create($attributes['callback_query']);
         }
     }
 }

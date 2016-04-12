@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class Location extends Type
+final class Location extends Type
 {
     /**
      * Longitude as defined by sender

@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class PhotoSize extends Type
+final class PhotoSize extends Type
 {
     /**
      * Unique identifier for this file

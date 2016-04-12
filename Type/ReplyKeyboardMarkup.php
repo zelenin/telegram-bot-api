@@ -2,12 +2,12 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class ReplyKeyboardMarkup extends ReplyMarkup
+final class ReplyKeyboardMarkup extends ReplyMarkup
 {
     /**
-     * Array of button rows, each represented by an Array of Strings
+     * Array of button rows, each represented by an Array of KeyboardButton objects
      *
-     * @var string[][]
+     * @var KeyboardButton[][]
      */
     public $keyboard;
 
@@ -19,7 +19,7 @@ class ReplyKeyboardMarkup extends ReplyMarkup
     public $resize_keyboard = false;
 
     /**
-     * Optional. Requests clients to hide the keyboard as soon as it's been used. Defaults to false.
+     * Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false.
      *
      * @var boolean
      */

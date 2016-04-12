@@ -10,5 +10,5 @@ interface Client
      *
      * @return Response
      */
-    public function request($method, $params = []);
+    public function request($method, array $params = []);
 }

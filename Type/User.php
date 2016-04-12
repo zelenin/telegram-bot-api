@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class User extends Type
+final class User extends Type
 {
     /**
      * Unique identifier for this user or bot

@@ -2,7 +2,7 @@
 
 namespace Zelenin\Telegram\Bot\Type;
 
-class Voice extends Type
+final class Voice extends Type
 {
     /**
      * Unique identifier for this file

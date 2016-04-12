@@ -4,6 +4,7 @@ namespace Zelenin\Telegram\Bot;
 
 use stdClass;
 use Zelenin\Telegram\Bot\Client\Client;
+use Zelenin\Telegram\Bot\Client\Response;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
 use Zelenin\Telegram\Bot\Type\File;
 use Zelenin\Telegram\Bot\Type\Message;
@@ -28,45 +29,39 @@ final class Api
     }
 
     /**
-     * @param $method
+     * @param string $method
      * @param array $params
      *
-     * @return mixed|stdClass
-     *
-     * @throws NotOkException
+     * @return Response
      */
-    public function request($method, $params = [])
+    public function request($method, array $params = [])
     {
         $response = $this->client->request($method, $params);
         if (!$response->getOk()) {
             throw new NotOkException(sprintf('Code: %s. Description: "%s".',$response->getErrorCode(), $response->getDescription()));
         }
-        return $response->getResult();
+        return $response;
     }
 
     /**
      * @return User
-     *
-     * @throws NotOkException
      */
     public function getMe()
     {
-        return new User($this->request('getMe'));
+        return User::createFromResponse($this->request('getMe'));
     }
 
     /**
-     * @param $params
+     * @param array $params
      *
      * @return Message
-     *
-     * @throws NotOkException
      */
-    public function sendMessage($params)
+    public function sendMessage(array $params)
     {
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendMessage', $params));
+        return Message::createFromResponse($this->request('sendMessage', $params));
     }
 
     /**
@@ -78,7 +73,7 @@ final class Api
      */
     public function forwardMessage($params)
     {
-        return new Message($this->request('forwardMessage', $params));
+        return Message::createFromResponse($this->request('forwardMessage', $params));
     }
 
     /**
@@ -93,7 +88,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendPhoto', $params));
+        return Message::createFromResponse($this->request('sendPhoto', $params));
     }
 
     /**
@@ -108,7 +103,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendAudio', $params));
+        return Message::createFromResponse($this->request('sendAudio', $params));
     }
 
     /**
@@ -123,7 +118,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendDocument', $params));
+        return Message::createFromResponse($this->request('sendDocument', $params));
     }
 
     /**
@@ -138,7 +133,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendSticker', $params));
+        return Message::createFromResponse($this->request('sendSticker', $params));
     }
 
     /**
@@ -153,7 +148,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendVideo', $params));
+        return Message::createFromResponse($this->request('sendVideo', $params));
     }
 
     /**
@@ -168,7 +163,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendVideo', $params));
+        return Message::createFromResponse($this->request('sendVideo', $params));
     }
 
     /**
@@ -183,17 +178,15 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof ReplyMarkup) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
-        return new Message($this->request('sendLocation', $params));
+        return Message::createFromResponse($this->request('sendLocation', $params));
     }
 
     /**
-     * @param $params
+     * @param array $params
      *
-     * @return mixed
-     *
-     * @throws NotOkException
+     * @return Response
      */
-    public function sendChatAction($params)
+    public function sendChatAction(array $params)
     {
         return $this->request('sendChatAction', $params);
     }
@@ -207,7 +200,7 @@ final class Api
      */
     public function getUserProfilePhotos($params)
     {
-        return new UserProfilePhotos($this->request('getUserProfilePhotos', $params));
+        return UserProfilePhotos::createFromResponse($this->request('getUserProfilePhotos', $params));
     }
 
     /**
@@ -219,7 +212,7 @@ final class Api
      */
     public function getFile($params)
     {
-        return new File($this->request('getFile', $params));
+        return File::createFromResponse($this->request('getFile', $params));
     }
 
     /**
@@ -232,7 +225,7 @@ final class Api
     public function getUpdates($params)
     {
         return array_map(function (stdClass $item) {
-            return new Update($item);
+            return Update::createFromResponse($item);
         }, $this->request('getUpdates', $params));
     }
 
