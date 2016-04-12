@@ -216,17 +216,15 @@ final class Api
     }
 
     /**
-     * @param $params
-     *
+     * @param array $params
+     * 
      * @return Update[]
-     *
-     * @throws NotOkException
      */
-    public function getUpdates($params)
+    public function getUpdates(array $params = [])
     {
-        return array_map(function (stdClass $item) {
-            return Update::createFromResponse($item);
-        }, $this->request('getUpdates', $params));
+        return array_map(function (stdClass $update) {
+            return Update::create($update);
+        }, $this->request('getUpdates', $params)->getResult());
     }
 
     /**

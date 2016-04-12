@@ -51,7 +51,7 @@ See [Bot API documentation](https://core.telegram.org/bots/api) for other method
 ```php
 $api = ApiFactory::create($token);
 
-$daemon = new \Zelenin\Telegram\Bot\Daemon\Daemon($client);
+$daemon = new \Zelenin\Telegram\Bot\Daemon\NaiveDaemon($client);
 
 $daemon
     ->onUpdate(function (\Zelenin\Telegram\Bot\Type\Update $update) {

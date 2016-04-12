@@ -21,8 +21,7 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "amphp/amp": "~1.0"
+        "guzzlehttp/guzzle": "~6.0"
     },
     "suggest": {
         "ext/pcntl": "Usage of signal handler"
