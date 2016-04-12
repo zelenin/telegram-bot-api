@@ -39,7 +39,7 @@ final class Api
     {
         $response = $this->client->request($method, $params);
         if (!$response->getOk()) {
-            throw new NotOkException('Code: ' . $response->getErrorCode() . '. Description: "' . $response->getDescription() . '".');
+            throw new NotOkException(sprintf('Code: %s. Description: "%s".',$response->getErrorCode(), $response->getDescription()));
         }
         return $response->getResult();
     }

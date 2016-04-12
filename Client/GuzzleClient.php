@@ -4,6 +4,7 @@ namespace Zelenin\Telegram\Bot\Client;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use HttpRuntimeException;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
 
 final class GuzzleClient implements Client
@@ -55,7 +56,7 @@ final class GuzzleClient implements Client
             $response = json_decode($response->getBody());
 
             if ($response === null) {
-                throw new NotOkException('Empty response.');
+                throw new HttpRuntimeException('Empty response.');
             }
             return new Response($response->ok, $response->result);
         } catch (ClientException $e) {

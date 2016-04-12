@@ -2,8 +2,8 @@
 
 namespace Zelenin\Telegram\Bot\Exception;
 
-use Exception;
+use RuntimeException;
 
-class NotOkException extends Exception
+class NotOkException extends RuntimeException
 {
 }

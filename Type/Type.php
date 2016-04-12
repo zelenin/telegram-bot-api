@@ -4,7 +4,7 @@ namespace Zelenin\Telegram\Bot\Type;
 
 use stdClass;
 
-abstract class Type implements TypeInterface
+abstract class Type
 {
     /**
      * @param stdClass $result

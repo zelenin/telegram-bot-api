@@ -3,6 +3,7 @@
 namespace Zelenin\Telegram\Bot\Daemon;
 
 use Generator;
+use InvalidArgumentException;
 use Zelenin\Telegram\Bot\Api;
 use Zelenin\Telegram\Bot\Exception\NotCallableException;
 use Zelenin\Telegram\Bot\Type\Update;
@@ -41,13 +42,10 @@ class Daemon implements DaemonInterface
         $this->timeout = (int)$timeout;
     }
 
-    /**
-     * @throws \Exception
-     */
     public function run()
     {
         if (!is_callable($this->updateCallback)) {
-            throw new NotCallableException(sprintf('"%s" is not a callable function. Set it via "%s".', 'updateCallback', 'onUpdate'));
+            throw new InvalidArgumentException(sprintf('"%s" is not a callable function. Set it via "%s".', 'updateCallback', 'onUpdate'));
         }
 
         \Amp\run(function () {
