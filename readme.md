@@ -11,13 +11,13 @@ The preferred way to install this extension is through [Composer](http://getcomp
 Either run
 
 ```
-php composer.phar require "zelenin/telegram-bot-api" "~0.0"
+php composer.phar require "zelenin/telegram-bot-api" "~1.0"
 ```
 
 or add
 
 ```
-"zelenin/telegram-bot-api": "~0.0"
+"zelenin/telegram-bot-api": "~1.0"
 ```
 
 to the require section of your ```composer.json```
@@ -25,16 +25,16 @@ to the require section of your ```composer.json```
 ## Usage
 
 ```php
-$client = new Zelenin\Telegram\Bot\Api($token);
+$api = ApiFactory::create($token);
 
 try {
-    $response = $client->sendMessage([
+    $response = $api->sendMessage([
         'chat_id' => $chatId,
         'text' => 'Test message'
     ]);
     print_r($response);
     
-    $response = $client->sendPhoto([
+    $response = $api->sendPhoto([
     	'chat_id' => $myId,
     	'photo' => fopen('/home/www/photo.jpg', 'r')
     ]);
@@ -49,11 +49,7 @@ See [Bot API documentation](https://core.telegram.org/bots/api) for other method
 ### Daemon
 
 ```php
-$config = [
-    'token' => 'your-api-token'
-];
-
-$client = new Api($config['token']);
+$api = ApiFactory::create($token);
 
 $daemon = new \Zelenin\Telegram\Bot\Daemon\Daemon($client);
 
