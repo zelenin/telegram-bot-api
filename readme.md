@@ -1,6 +1,6 @@
 # Telegram Bot API Client
 
-[Telegram](https://telegram.org) [Bot](https://core.telegram.org/bots) [API](https://core.telegram.org/bots/api) Client
+[Telegram](https://telegram.org) [Bot](https://core.telegram.org/bots) [API](https://core.telegram.org/bots/api) Client.
 
 ## Installation
 
@@ -51,7 +51,7 @@ See [Bot API documentation](https://core.telegram.org/bots/api) for other method
 ```php
 $api = ApiFactory::create($token);
 
-$daemon = new \Zelenin\Telegram\Bot\Daemon\NaiveDaemon($client);
+$daemon = new \Zelenin\Telegram\Bot\Daemon\NaiveDaemon($api);
 
 $daemon
     ->onUpdate(function (\Zelenin\Telegram\Bot\Type\Update $update) {
