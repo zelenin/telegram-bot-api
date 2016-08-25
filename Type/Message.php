@@ -40,6 +40,13 @@ final class Message extends Type
     public $forward_from;
 
     /**
+     * Optional. For messages forwarded from a channel, information about the original channel
+     *
+     * @var Chat
+     */
+    public $forward_from_chat;
+
+    /**
      * Optional. For forwarded messages, date the original message was sent in Unix time
      *
      * @var integer
@@ -231,6 +238,10 @@ final class Message extends Type
 
         if (isset($attributes['forward_from'])) {
             $this->forward_from = User::create($attributes['forward_from']);
+        }
+
+        if (isset($attributes['forward_from_chat'])) {
+            $this->forward_from_chat = Chat::create($attributes['forward_from_chat']);
         }
 
         if (isset($attributes['reply_to_message'])) {
