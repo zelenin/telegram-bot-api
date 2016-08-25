@@ -31,4 +31,23 @@ final class MessageEntity extends Type
      * @var string
      */
     public $url;
+
+    /**
+     * Optional. For “text_mention” only, the mentioned user
+     *
+     * @var User
+     */
+    public $user;
+
+    /**
+     * @inheritdoc
+     */
+    public function loadRelated(array $attributes)
+    {
+        parent::loadRelated($attributes);
+
+        if (isset($attributes['user'])) {
+            $this->user = User::create($attributes['user']);
+        }
+    }
 }

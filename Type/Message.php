@@ -61,6 +61,13 @@ final class Message extends Type
     public $reply_to_message;
 
     /**
+     * Optional. Date the message was last edited in Unix time
+     *
+     * @var int
+     */
+    public $edit_date;
+
+    /**
      * For text messages, the actual UTF-8 text of the message
      *
      * @var string

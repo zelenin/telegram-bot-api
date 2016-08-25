@@ -22,6 +22,13 @@ final class Update extends Type
     public $message;
 
     /**
+     * Optional. New version of a message that is known to the bot and was edited
+     *
+     * @var Message
+     */
+    public $edited_message;
+
+    /**
      * Optional. New incoming inline query
      *
      * @var InlineQuery
@@ -51,6 +58,10 @@ final class Update extends Type
 
         if (isset($attributes['message'])) {
             $this->message = Message::create($attributes['message']);
+        }
+
+        if (isset($attributes['edited_message'])) {
+            $this->edited_message = Message::create($attributes['edited_message']);
         }
 
         if (isset($attributes['inline_query'])) {
