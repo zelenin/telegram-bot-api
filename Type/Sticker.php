@@ -33,6 +33,13 @@ final class Sticker extends Type
     public $thumb;
 
     /**
+     * Optional. Emoji associated with the sticker
+     *
+     * @var string
+     */
+    public $emoji;
+
+    /**
      * Optional. File size
      *
      * @var integer
