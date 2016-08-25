@@ -6,6 +6,8 @@ use stdClass;
 use Zelenin\Telegram\Bot\Client\Client;
 use Zelenin\Telegram\Bot\Client\Response;
 use Zelenin\Telegram\Bot\Exception\NotOkException;
+use Zelenin\Telegram\Bot\Type\Chat;
+use Zelenin\Telegram\Bot\Type\ChatMember;
 use Zelenin\Telegram\Bot\Type\File;
 use Zelenin\Telegram\Bot\Type\Keyboard;
 use Zelenin\Telegram\Bot\Type\Message;
@@ -40,6 +42,7 @@ final class Api
         if (!$response->getOk()) {
             throw new NotOkException(sprintf('Code: %s. Description: "%s".', $response->getErrorCode(), $response->getDescription()));
         }
+
         return $response;
     }
 
@@ -61,6 +64,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendMessage', $params));
     }
 
@@ -84,6 +88,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendPhoto', $params));
     }
 
@@ -97,6 +102,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendAudio', $params));
     }
 
@@ -110,6 +116,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendDocument', $params));
     }
 
@@ -123,6 +130,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendSticker', $params));
     }
 
@@ -136,6 +144,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendVideo', $params));
     }
 
@@ -149,6 +158,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendVideo', $params));
     }
 
@@ -162,6 +172,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendLocation', $params));
     }
 
@@ -175,6 +186,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendVenue', $params));
     }
 
@@ -188,6 +200,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('sendContact', $params));
     }
 
@@ -226,9 +239,19 @@ final class Api
      *
      * @return Response
      */
-    public function answerCallbackQuery(array $params)
+    public function kickChatMember(array $params)
     {
-        return $this->request('answerCallbackQuery', $params);
+        return $this->request('kickChatMember', $params);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return Response
+     */
+    public function leaveChat(array $params)
+    {
+        return $this->request('leaveChat', $params);
     }
 
     /**
@@ -244,11 +267,53 @@ final class Api
     /**
      * @param array $params
      *
+     * @return Chat
+     */
+    public function getChat(array $params)
+    {
+        return Chat::createFromResponse($this->request('getChat', $params));
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return ChatMember[]
+     */
+    public function getChatAdministrators(array $params)
+    {
+        return array_map(function ($user) {
+            return ChatMember::create($user);
+        }, $this->request('getChatAdministrators', $params)->getResult());
+    }
+
+    /**
+     * @param array $params
+     *
      * @return Response
      */
-    public function kickChatMember(array $params)
+    public function getChatMembersCount(array $params)
     {
-        return $this->request('kickChatMember', $params);
+        return $this->request('getChatMembersCount', $params);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return ChatMember
+     */
+    public function getChatMember(array $params)
+    {
+        return ChatMember::createFromResponse($this->request('getChatMember', $params)->getResult());
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return Response
+     */
+    public function answerCallbackQuery(array $params)
+    {
+        return $this->request('answerCallbackQuery', $params);
     }
 
     /**
@@ -261,6 +326,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('editMessageText', $params));
     }
 
@@ -274,6 +340,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('editMessageCaption', $params));
     }
 
@@ -287,6 +354,7 @@ final class Api
         if (isset($params['reply_markup']) && $params['reply_markup'] instanceof Keyboard) {
             $params['reply_markup'] = json_encode($params['reply_markup']);
         }
+
         return Message::createFromResponse($this->request('editMessageReplyMarkup', $params));
     }
 
