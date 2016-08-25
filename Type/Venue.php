@@ -39,8 +39,8 @@ final class Venue extends Type
     {
         parent::loadRelated($attributes);
 
-        if (isset($result['location'])) {
-            $this->location = Location::create($result['location']);
+        if (isset($attributes['location'])) {
+            $this->location = Location::create($attributes['location']);
         }
     }
 }

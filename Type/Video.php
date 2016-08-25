@@ -60,8 +60,8 @@ final class Video extends Type
     {
         parent::loadRelated($attributes);
 
-        if (isset($result['thumb'])) {
-            $this->thumb = PhotoSize::create($result['thumb']);
+        if (isset($attributes['thumb'])) {
+            $this->thumb = PhotoSize::create($attributes['thumb']);
         }
     }
 }
